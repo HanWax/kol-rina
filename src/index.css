@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  /* Official Kol Rina palette */
+  --color-kr-navy: #3A4972;
+  --color-kr-navy-deep: #2e3a5c;
+  --color-kr-coral: #BA9192;
+  --color-kr-coral-light: #caa6a7;
+  --color-kr-teal: #7B9878;
+  --color-kr-teal-light: #8daa8a;
+  --color-kr-gold: #B39962;
+  --color-kr-gold-light: #c4ad7a;
+  --color-kr-blue: #566C94;
+  --color-kr-jade: #457E77;
+  --color-kr-smalt: #538780;
+  --color-kr-cream: #faf8f4;
+  --color-kr-parchment: #f3efe7;
+  --color-kr-white: #ffffff;
+  --color-kr-text: #333333;
+  --color-kr-muted: #777777;
+  --color-kr-rule: #3A4972;
+
+  --font-script: "Lobster", cursive;
+  --font-heading: "Cormorant Garamond", serif;
+  --font-body: "Crimson Pro", serif;
+  --font-caps: "Josefin Sans", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-kr-text);
+  background: var(--color-kr-cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(186, 145, 146, 0.25);
+  color: var(--color-kr-navy-deep);
+}
+
+/* Gold double rule — the horizontal lines from the original */
+.gold-double-rule {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-direction: column;
+}
+.gold-double-rule::before,
+.gold-double-rule::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-kr-gold);
+}
+.gold-double-rule::before {
+  margin-bottom: 4px;
+}
+.gold-double-rule::after {
+  margin-top: 0;
+}
+
+/* Navy horizontal rules like the original site */
+.navy-rule {
+  height: 2px;
+  background: var(--color-kr-navy);
+}
+
+/* Floating animation for decorative circles */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes float-slower {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
