@@ -75,11 +75,11 @@ export function HomePage() {
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="w-[320px] h-[320px] md:w-[420px] md:h-[420px] rounded-full bg-kr-coral shadow-[0_8px_50px_rgba(186,145,146,0.25)] flex flex-col items-center justify-center px-10 md:px-14 text-center relative z-10"
             >
-              <h2 className="font-caps text-[13px] md:text-[15px] font-bold tracking-[0.2em] uppercase text-white mb-4 md:mb-5">
+              <h2 className="font-caps text-[13px] md:text-[15px] font-bold tracking-[0.2em] uppercase text-kr-navy mb-4 md:mb-5">
                 Who Are We?
               </h2>
-              <p className="text-white/90 text-[13px] md:text-[15px] leading-relaxed font-body">
-                <span className="font-script text-kr-gold text-lg">Kol Rina</span> is a
+              <p className="text-kr-navy text-[13px] md:text-[15px] leading-relaxed font-body">
+                <span className="font-script text-kr-navy-deep text-lg">Kol Rina</span> is a
                 lay-led partnership minyan which meets every few Shabbatot. We offer
                 uplifting and song-filled orthodox prayer, in which both men and women
                 participate to the extent permitted by halacha. We run a range of
