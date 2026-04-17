@@ -19,6 +19,8 @@ export function EventsPage() {
       });
   }, []);
 
+  const specialEvents = events.filter((e) => e.type !== "shabbat");
+
   return (
     <div>
       <StainedGlassHero title="Events" subtitle="What's Coming Up" />
@@ -31,11 +33,17 @@ export function EventsPage() {
         <div className="relative max-w-4xl mx-auto px-6">
           <SectionHeading>Upcoming Events</SectionHeading>
 
-          <div className="space-y-4 mt-8">
-            {events.map((ev, i) => (
-              <EventCard key={ev.id} event={ev} index={i} />
-            ))}
-          </div>
+          {specialEvents.length === 0 ? (
+            <p className="text-center text-kr-muted font-body">
+              No special events scheduled.
+            </p>
+          ) : (
+            <div className="flex flex-col gap-10 md:gap-12 mt-8">
+              {specialEvents.map((ev, i) => (
+                <EventCard key={ev.id} event={ev} index={i} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

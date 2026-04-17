@@ -84,3 +84,31 @@ export async function deleteEvent(
     throw new Error(err.error || "Failed to delete event");
   }
 }
+
+export interface Booking {
+  id: string;
+  event_id: string;
+  full_name: string;
+  email: string;
+  phone: string | null;
+  number_of_attendees: number;
+  dietary_requirements: string | null;
+  notes: string | null;
+  custom_fields: Record<string, string> | null;
+  created_at: string;
+}
+
+export async function fetchBookings(
+  eventId: string,
+  token: string,
+): Promise<Booking[]> {
+  const res = await fetch(
+    `${API_BASE}/bookings?eventId=${encodeURIComponent(eventId)}`,
+    { headers: { Authorization: `Bearer ${token}` } },
+  );
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || "Failed to fetch bookings");
+  }
+  return res.json();
+}

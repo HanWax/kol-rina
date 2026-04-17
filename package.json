@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@clerk/backend": "^3.2.12",
     "@clerk/clerk-react": "^5.61.4",
     "@neondatabase/serverless": "^1.0.2",
     "@tanstack/react-router": "^1.168.10",

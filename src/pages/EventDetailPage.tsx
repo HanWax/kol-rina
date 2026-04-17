@@ -200,7 +200,7 @@ export function EventDetailPage() {
             >
               <BookingForm
                 booking={event.booking}
-                eventTitle={event.title}
+                eventId={event.id}
                 onSuccess={() => setBookingConfirmed(true)}
               />
             </motion.div>

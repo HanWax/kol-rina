@@ -8,7 +8,14 @@ import {
   useAuth,
 } from "@clerk/clerk-react";
 import type { KolRinaEvent, EventType } from "../data/events";
-import { fetchEvents, createEvent, updateEvent, deleteEvent } from "../lib/api";
+import {
+  fetchEvents,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+  fetchBookings,
+  type Booking,
+} from "../lib/api";
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -35,6 +42,7 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<KolRinaEvent | null>(null);
   const [creating, setCreating] = useState(false);
+  const [viewingBookingsFor, setViewingBookingsFor] = useState<KolRinaEvent | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -88,6 +96,16 @@ function AdminDashboard() {
       setError(err.message);
     }
   };
+
+  if (viewingBookingsFor) {
+    return (
+      <BookingsList
+        event={viewingBookingsFor}
+        getToken={getToken}
+        onBack={() => setViewingBookingsFor(null)}
+      />
+    );
+  }
 
   if (creating || editing) {
     return (
@@ -166,6 +184,14 @@ function AdminDashboard() {
                 </p>
               </div>
               <div className="flex gap-2 flex-shrink-0">
+                {ev.booking && (
+                  <button
+                    onClick={() => setViewingBookingsFor(ev)}
+                    className="px-3 py-1.5 text-kr-teal bg-kr-teal/[0.1] font-caps text-[9px] font-semibold tracking-[0.1em] uppercase rounded-lg hover:bg-kr-teal/[0.2] transition-colors cursor-pointer"
+                  >
+                    Bookings
+                  </button>
+                )}
                 <button
                   onClick={() => setEditing(ev)}
                   className="px-3 py-1.5 text-kr-navy bg-kr-navy/[0.06] font-caps text-[9px] font-semibold tracking-[0.1em] uppercase rounded-lg hover:bg-kr-navy/[0.12] transition-colors cursor-pointer"
@@ -220,9 +246,6 @@ function EventForm({
   const [bookingClosed, setBookingClosed] = useState(
     initial?.booking?.closed || false,
   );
-  const [appsScriptUrl, setAppsScriptUrl] = useState(
-    initial?.booking?.googleAppsScriptUrl || "",
-  );
 
   // Payment
   const [enablePayment, setEnablePayment] = useState(!!initial?.payment);
@@ -261,7 +284,6 @@ function EventForm({
 
     if (enableBooking) {
       data.booking = {
-        googleAppsScriptUrl: appsScriptUrl || "PLACEHOLDER_URL",
         capacity: capacity ? parseInt(capacity) : undefined,
         spotsRemaining: spotsRemaining ? parseInt(spotsRemaining) : undefined,
         closed: bookingClosed,
@@ -451,16 +473,6 @@ function EventForm({
               </div>
             </div>
 
-            <div>
-              <label className={labelClass}>Google Apps Script URL</label>
-              <input
-                className={inputClass}
-                value={appsScriptUrl}
-                onChange={(e) => setAppsScriptUrl(e.target.value)}
-                placeholder="https://script.google.com/macros/s/..."
-              />
-            </div>
-
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
@@ -574,6 +586,128 @@ function EventForm({
         </button>
       </div>
     </form>
+  );
+}
+
+function BookingsList({
+  event,
+  getToken,
+  onBack,
+}: {
+  event: KolRinaEvent;
+  getToken: () => Promise<string | null>;
+  onBack: () => void;
+}) {
+  const [bookings, setBookings] = useState<Booking[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const token = await getToken();
+        if (!token) throw new Error("Not authenticated");
+        const data = await fetchBookings(event.id, token);
+        setBookings(data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [event.id, getToken]);
+
+  const totalAttendees = bookings.reduce(
+    (sum, b) => sum + b.number_of_attendees,
+    0,
+  );
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <button
+            onClick={onBack}
+            className="font-caps text-[10px] font-semibold tracking-[0.15em] uppercase text-kr-muted hover:text-kr-navy transition-colors cursor-pointer mb-2"
+          >
+            ← Back to events
+          </button>
+          <h2 className="font-heading text-2xl font-semibold text-kr-navy">
+            Bookings — {event.title}
+          </h2>
+          {!loading && (
+            <p className="text-[13px] text-kr-muted font-body mt-1">
+              {bookings.length} booking{bookings.length === 1 ? "" : "s"} · {totalAttendees} attendee{totalAttendees === 1 ? "" : "s"}
+              {event.booking?.capacity ? ` · ${event.booking.capacity} capacity` : ""}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {error && (
+        <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-lg text-sm font-body">
+          {error}
+        </div>
+      )}
+
+      {loading ? (
+        <p className="text-kr-muted font-body">Loading bookings...</p>
+      ) : bookings.length === 0 ? (
+        <p className="text-kr-muted font-body">No bookings yet.</p>
+      ) : (
+        <div className="space-y-3">
+          {bookings.map((b) => (
+            <div
+              key={b.id}
+              className="bg-white rounded-xl p-5 border border-kr-navy/[0.08]"
+            >
+              <div className="flex items-start justify-between gap-4 mb-2">
+                <div>
+                  <h3 className="font-heading text-base font-semibold text-kr-navy">
+                    {b.full_name}
+                  </h3>
+                  <a
+                    href={`mailto:${b.email}`}
+                    className="text-[13px] text-kr-teal font-body hover:underline"
+                  >
+                    {b.email}
+                  </a>
+                  {b.phone && (
+                    <span className="text-[13px] text-kr-muted font-body ml-3">
+                      {b.phone}
+                    </span>
+                  )}
+                </div>
+                <div className="text-right">
+                  <div className="font-caps text-[9px] font-semibold tracking-[0.15em] uppercase text-kr-muted">
+                    {b.number_of_attendees} attendee{b.number_of_attendees === 1 ? "" : "s"}
+                  </div>
+                  <div className="text-[11px] text-kr-muted/70 font-body italic mt-0.5">
+                    {new Date(b.created_at).toLocaleString()}
+                  </div>
+                </div>
+              </div>
+              {b.dietary_requirements && (
+                <p className="text-[13px] text-kr-text font-body mt-2">
+                  <span className="font-semibold">Dietary:</span> {b.dietary_requirements}
+                </p>
+              )}
+              {b.notes && (
+                <p className="text-[13px] text-kr-text font-body mt-1">
+                  <span className="font-semibold">Notes:</span> {b.notes}
+                </p>
+              )}
+              {b.custom_fields &&
+                Object.entries(b.custom_fields).map(([k, v]) => (
+                  <p key={k} className="text-[13px] text-kr-text font-body mt-1">
+                    <span className="font-semibold">{k}:</span> {v}
+                  </p>
+                ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

@@ -1,25 +1,24 @@
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { SectionHeading } from "../components/SectionHeading";
 import { StainedGlassHero } from "../components/StainedGlassHero";
-
-interface MinyanDate {
-  date: string;
-  parasha: string;
-  time: string;
-}
-
-const dates: MinyanDate[] = [
-  { date: "Shabbat, 18 April 2026", parasha: "Parashat Tazria-Metzora", time: "9:15 AM" },
-  { date: "Shabbat, 2 May 2026", parasha: "Parashat Acharei Mot-Kedoshim", time: "9:15 AM" },
-  { date: "Shabbat, 16 May 2026", parasha: "Parashat Emor", time: "9:15 AM" },
-  { date: "Shabbat, 30 May 2026", parasha: "Parashat Behar-Bechukotai", time: "9:15 AM" },
-  { date: "Shabbat, 13 June 2026", parasha: "Parashat Bamidbar", time: "9:15 AM" },
-  { date: "Shabbat, 27 June 2026", parasha: "Parashat Behaalotecha", time: "9:15 AM" },
-  { date: "Shabbat, 11 July 2026", parasha: "Parashat Korach", time: "9:15 AM" },
-  { date: "Shabbat, 25 July 2026", parasha: "Parashat Balak", time: "9:15 AM" },
-];
+import type { KolRinaEvent } from "../data/events";
+import { getUpcomingEvents } from "../data/events";
+import { fetchEvents } from "../lib/api";
 
 export function MinyanDatesPage() {
+  const [events, setEvents] = useState<KolRinaEvent[]>(getUpcomingEvents());
+
+  useEffect(() => {
+    fetchEvents()
+      .then(setEvents)
+      .catch(() => {
+        // Keep hardcoded fallback on API failure
+      });
+  }, []);
+
+  const dates = events.filter((e) => e.type === "shabbat");
+
   return (
     <div>
       <StainedGlassHero title="Minyan Dates" subtitle="Upcoming Services" />
@@ -38,39 +37,57 @@ export function MinyanDatesPage() {
             We meet every few Shabbatot for an uplifting Shacharit service. All are welcome.
           </p>
 
-          <div className="space-y-3">
-            {dates.map((d, i) => (
-              <motion.div
-                key={d.date}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.35, delay: i * 0.05 }}
-                className="group bg-kr-white rounded-xl border border-kr-navy/[0.06] hover:border-kr-coral/25 transition-all duration-500 hover:shadow-[0_6px_24px_rgba(186,145,146,0.06)]"
-              >
-                <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 p-5 md:p-6">
-                  {/* Coral dot */}
-                  <div className="hidden md:block w-3 h-3 rounded-full bg-kr-coral/30 group-hover:bg-kr-coral/70 transition-colors duration-500 flex-shrink-0" />
+          {dates.length === 0 ? (
+            <p className="text-center text-kr-muted font-body">
+              No upcoming Shabbat dates scheduled.
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {dates.map((d, i) => (
+                <motion.div
+                  key={d.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: i * 0.05 }}
+                  className="group bg-kr-white rounded-xl border border-kr-navy/[0.06] hover:border-kr-coral/25 transition-all duration-500 hover:shadow-[0_6px_24px_rgba(186,145,146,0.06)]"
+                >
+                  <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 p-5 md:p-6">
+                    {/* Coral dot */}
+                    <div className="hidden md:block w-3 h-3 rounded-full bg-kr-coral/30 group-hover:bg-kr-coral/70 transition-colors duration-500 flex-shrink-0" />
 
-                  <div className="flex-1">
-                    <h3 className="font-heading text-lg md:text-xl font-semibold text-kr-navy">
-                      {d.date}
-                    </h3>
-                    <p className="text-kr-coral font-body italic text-[15px] mt-0.5">
-                      {d.parasha}
-                    </p>
-                  </div>
+                    <div className="flex-1">
+                      <h3 className="font-heading text-lg md:text-xl font-semibold text-kr-navy">
+                        {d.date}
+                      </h3>
+                      <p className="text-kr-coral font-body italic text-[15px] mt-0.5">
+                        {d.title}
+                      </p>
+                    </div>
 
-                  <div className="md:text-right text-[13px] text-kr-muted">
-                    <p>
-                      Shacharit:{" "}
-                      <span className="font-semibold text-kr-text">{d.time}</span>
-                    </p>
+                    <div className="md:text-right text-[13px] text-kr-muted space-y-0.5">
+                      {d.time && (
+                        <p>
+                          Shacharit:{" "}
+                          <span className="font-semibold text-kr-text">
+                            {d.time}
+                          </span>
+                        </p>
+                      )}
+                      {d.location && (
+                        <p>
+                          Venue:{" "}
+                          <span className="font-semibold text-kr-text">
+                            {d.location}
+                          </span>
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

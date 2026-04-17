@@ -6,11 +6,11 @@ type FormState = "idle" | "submitting" | "success" | "error";
 
 export function BookingForm({
   booking,
-  eventTitle,
+  eventId,
   onSuccess,
 }: {
   booking: EventBookingConfig;
-  eventTitle: string;
+  eventId: string;
   onSuccess?: () => void;
 }) {
   const [formData, setFormData] = useState<Record<string, string>>({});
@@ -50,32 +50,23 @@ export function BookingForm({
     setErrorMessage("");
 
     try {
-      const payload = { ...formData, _eventTitle: eventTitle };
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, eventId }),
+      });
 
-      if (
-        booking.googleAppsScriptUrl &&
-        booking.googleAppsScriptUrl !== "PLACEHOLDER_URL"
-      ) {
-        const res = await fetch(booking.googleAppsScriptUrl, {
-          method: "POST",
-          body: JSON.stringify(payload),
-          headers: { "Content-Type": "text/plain" },
-          mode: "no-cors",
-        });
-
-        // Google Apps Script with no-cors returns opaque response
-        // We treat it as success if no error was thrown
-        if (res.type !== "opaque" && !res.ok) {
-          throw new Error("Submission failed");
-        }
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "Submission failed");
       }
 
       setState("success");
       onSuccess?.();
-    } catch {
+    } catch (err: any) {
       setState("error");
       setErrorMessage(
-        "Something went wrong. Please try again or email us directly.",
+        err.message || "Something went wrong. Please try again or email us directly.",
       );
     }
   };
