@@ -160,7 +160,7 @@ export function GetInvolvedPage() {
                 Join our community group
               </p>
               <a
-                href="https://chat.whatsapp.com/"
+                href="https://tinyurl.com/KolRinaNews"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2 bg-kr-gold text-kr-navy-deep font-caps text-[8px] md:text-[9px] font-semibold tracking-[0.15em] uppercase rounded-full hover:bg-kr-gold-light transition-colors duration-300"
