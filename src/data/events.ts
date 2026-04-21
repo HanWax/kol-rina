@@ -251,8 +251,25 @@ export function getEventById(id: string): KolRinaEvent | undefined {
   return events.find((e) => e.id === id);
 }
 
+/**
+ * Parses event date strings like "9 May 2026" into a timestamp. Returns
+ * Infinity for unparseable values so they sort to the end.
+ */
+export function parseEventDate(date: string): number {
+  const ms = Date.parse(date);
+  return Number.isNaN(ms) ? Infinity : ms;
+}
+
+export function sortEventsChronologically(
+  list: KolRinaEvent[],
+): KolRinaEvent[] {
+  return [...list].sort(
+    (a, b) => parseEventDate(a.date) - parseEventDate(b.date),
+  );
+}
+
 export function getUpcomingEvents(): KolRinaEvent[] {
-  return events;
+  return sortEventsChronologically(events);
 }
 
 export const typeStyles: Record<

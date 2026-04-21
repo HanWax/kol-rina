@@ -3,7 +3,10 @@ import { motion } from "motion/react";
 import { SectionHeading } from "../components/SectionHeading";
 import { StainedGlassHero } from "../components/StainedGlassHero";
 import type { KolRinaEvent } from "../data/events";
-import { getUpcomingEvents } from "../data/events";
+import {
+  getUpcomingEvents,
+  sortEventsChronologically,
+} from "../data/events";
 import { fetchEvents } from "../lib/api";
 
 export function MinyanDatesPage() {
@@ -11,7 +14,7 @@ export function MinyanDatesPage() {
 
   useEffect(() => {
     fetchEvents()
-      .then(setEvents)
+      .then((data) => setEvents(sortEventsChronologically(data)))
       .catch(() => {
         // Keep hardcoded fallback on API failure
       });

@@ -3,7 +3,11 @@ import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { SectionHeading } from "../components/SectionHeading";
 import type { KolRinaEvent } from "../data/events";
-import { getUpcomingEvents, typeStyles } from "../data/events";
+import {
+  getUpcomingEvents,
+  sortEventsChronologically,
+  typeStyles,
+} from "../data/events";
 import { fetchEvents } from "../lib/api";
 
 export function HomePage() {
@@ -11,7 +15,7 @@ export function HomePage() {
 
   useEffect(() => {
     fetchEvents()
-      .then(setEvents)
+      .then((data) => setEvents(sortEventsChronologically(data)))
       .catch(() => {
         // Keep hardcoded fallback on API failure
       });

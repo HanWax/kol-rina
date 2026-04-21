@@ -7,6 +7,11 @@ const clerk = createClerkClient({
   secretKey: process.env.CLERK_SECRET_KEY!,
 });
 
+const EVENT_DATE_RE =
+  /^\d{1,2} (January|February|March|April|May|June|July|August|September|October|November|December) \d{4}$/;
+const EVENT_DATE_HINT =
+  'Date must be in the format "DD Month YYYY", e.g. "9 May 2026".';
+
 async function verifyAuth(req: VercelRequest): Promise<boolean> {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith("Bearer ")) return false;
@@ -28,7 +33,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     if (req.method === "GET") {
-      const rows = await sql`SELECT * FROM events ORDER BY created_at ASC`;
+      const rows = await sql`
+        SELECT * FROM events
+        ORDER BY TO_DATE(date, 'FMDD Month YYYY') ASC, created_at ASC
+      `;
       return res.status(200).json(rows);
     }
 
@@ -38,6 +46,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       const e = req.body;
+      if (!EVENT_DATE_RE.test(e.date)) {
+        return res.status(400).json({ error: `Invalid date. ${EVENT_DATE_HINT}` });
+      }
+      if (e.endDate && !EVENT_DATE_RE.test(e.endDate)) {
+        return res.status(400).json({ error: `Invalid end date. ${EVENT_DATE_HINT}` });
+      }
+
       const id =
         e.id ||
         e.title

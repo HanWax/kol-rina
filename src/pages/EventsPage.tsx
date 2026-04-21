@@ -5,7 +5,10 @@ import { SectionHeading } from "../components/SectionHeading";
 import { StainedGlassHero } from "../components/StainedGlassHero";
 import { EventCard } from "../components/EventCard";
 import type { KolRinaEvent } from "../data/events";
-import { getUpcomingEvents } from "../data/events";
+import {
+  getUpcomingEvents,
+  sortEventsChronologically,
+} from "../data/events";
 import { fetchEvents } from "../lib/api";
 
 export function EventsPage() {
@@ -13,7 +16,7 @@ export function EventsPage() {
 
   useEffect(() => {
     fetchEvents()
-      .then(setEvents)
+      .then((data) => setEvents(sortEventsChronologically(data)))
       .catch(() => {
         // Keep hardcoded fallback on API failure
       });
