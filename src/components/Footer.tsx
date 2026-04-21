@@ -57,10 +57,21 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="mt-12 pt-5 border-t border-kr-navy/[0.08] text-center">
+          <div className="mt-12 pt-5 border-t border-kr-navy/[0.08] text-center space-y-1.5">
             <p className="text-[11px] text-kr-muted/50 font-caps tracking-wider">
-              &copy; {new Date().getFullYear()} Kol Rina Minyan &middot; Supported by
-              JOFA UK
+              &copy; {new Date().getFullYear()} Kol Rina Minyan
+            </p>
+            <p className="text-[11px] text-kr-muted/50 font-caps tracking-wider">
+              Kindly built by Hannah Waxman &middot;{" "}
+              <a
+                href="https://tonicolabs.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-kr-muted/60 hover:text-kr-coral transition-colors duration-300 underline decoration-kr-navy/15 underline-offset-2"
+              >
+                tonicolabs.com
+              </a>{" "}
+              &mdash; get in touch for your own website
             </p>
           </div>
         </div>

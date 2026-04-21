@@ -129,22 +129,12 @@ export const events: KolRinaEvent[] = [
     schedule: [
       { time: "9:30 AM", activity: "Shavuot Shacharit & Musaf" },
       { time: "12:30 PM", activity: "Community Lunch" },
+      { time: "2:00 PM", activity: "Learning with Gila Fine" },
     ],
     booking: {
       capacity: 80,
       spotsRemaining: 80,
-      fields: [
-        ...defaultBookingFields,
-        {
-          name: "mealPreference",
-          label: "Will you be joining the community lunch?",
-          type: "select",
-          options: [
-            "Yes, staying for lunch",
-            "Service only",
-          ],
-        },
-      ],
+      fields: defaultBookingFields,
     },
     payment: {
       amount:
