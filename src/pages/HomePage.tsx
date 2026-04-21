@@ -1,15 +1,26 @@
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { SectionHeading } from "../components/SectionHeading";
-
-const upcomingDates = [
-  { date: "Shabbat, 18 April", parasha: "Tazria-Metzora", time: "9:15 AM" },
-  { date: "Shabbat, 2 May", parasha: "Acharei Mot-Kedoshim", time: "9:15 AM" },
-  { date: "Shabbat, 16 May", parasha: "Emor", time: "9:15 AM" },
-  { date: "Shabbat, 30 May", parasha: "Behar-Bechukotai", time: "9:15 AM" },
-];
+import type { KolRinaEvent } from "../data/events";
+import { getUpcomingEvents } from "../data/events";
+import { fetchEvents } from "../lib/api";
 
 export function HomePage() {
+  const [events, setEvents] = useState<KolRinaEvent[]>(getUpcomingEvents());
+
+  useEffect(() => {
+    fetchEvents()
+      .then(setEvents)
+      .catch(() => {
+        // Keep hardcoded fallback on API failure
+      });
+  }, []);
+
+  const upcomingDates = events
+    .filter((e) => e.type === "shabbat")
+    .slice(0, 4);
+
   return (
     <div>
       {/* ============================================= */}
@@ -128,7 +139,7 @@ export function HomePage() {
           <div className="grid sm:grid-cols-2 gap-5 mt-8">
             {upcomingDates.map((d, i) => (
               <motion.div
-                key={d.date}
+                key={d.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -142,11 +153,13 @@ export function HomePage() {
                   {d.date}
                 </p>
                 <p className="font-body text-kr-coral text-[15px] mt-1.5 italic">
-                  Parashat {d.parasha}
+                  {d.title}
                 </p>
-                <p className="text-[12px] text-kr-muted mt-3 font-caps tracking-[0.15em] uppercase">
-                  Shacharit {d.time}
-                </p>
+                {d.time && (
+                  <p className="text-[12px] text-kr-muted mt-3 font-caps tracking-[0.15em] uppercase">
+                    Shacharit {d.time}
+                  </p>
+                )}
               </motion.div>
             ))}
           </div>
