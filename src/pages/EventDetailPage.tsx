@@ -113,18 +113,18 @@ export function EventDetailPage() {
                 {event.date}
                 {event.endDate ? ` – ${event.endDate}` : ""}
               </span>
-              {event.time && (
+              {event.time ? (
                 <>
                   <span className="text-kr-muted/40">&middot;</span>
                   <span>{event.time}</span>
                 </>
-              )}
+              ) : null}
             </div>
-            {event.location && (
+            {event.location ? (
               <p className="text-[14px] text-kr-muted font-body">
                 {event.location}
               </p>
-            )}
+            ) : null}
           </motion.div>
 
           {/* Description */}
@@ -145,7 +145,7 @@ export function EventDetailPage() {
           </motion.div>
 
           {/* Schedule */}
-          {event.schedule && event.schedule.length > 0 && (
+          {event.schedule && event.schedule.length > 0 ? (
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -173,12 +173,12 @@ export function EventDetailPage() {
                 ))}
               </div>
             </motion.div>
-          )}
+          ) : null}
         </div>
       </section>
 
       {/* Booking Section */}
-      {event.booking && (
+      {event.booking ? (
         <section className="py-16 md:py-20 bg-kr-parchment relative overflow-hidden">
           <div className="absolute bottom-0 -left-16 w-44 h-44 rounded-full bg-kr-teal/[0.04]" />
 
@@ -206,10 +206,10 @@ export function EventDetailPage() {
             </motion.div>
           </div>
         </section>
-      )}
+      ) : null}
 
       {/* Payment Section */}
-      {event.payment && (
+      {event.payment ? (
         <section
           id="payment"
           className="py-16 md:py-20 bg-kr-cream relative overflow-hidden"
@@ -225,7 +225,7 @@ export function EventDetailPage() {
             />
           </div>
         </section>
-      )}
+      ) : null}
 
       {/* Bottom back link */}
       <section className="py-12 bg-kr-parchment">

@@ -66,22 +66,22 @@ export function MinyanDatesPage() {
                     </div>
 
                     <div className="md:text-right text-[13px] text-kr-muted space-y-0.5">
-                      {d.time && (
+                      {d.time ? (
                         <p>
                           Shacharit:{" "}
                           <span className="font-semibold text-kr-text">
                             {d.time}
                           </span>
                         </p>
-                      )}
-                      {d.location && (
+                      ) : null}
+                      {d.location ? (
                         <p>
                           Venue:{" "}
                           <span className="font-semibold text-kr-text">
                             {d.location}
                           </span>
                         </p>
-                      )}
+                      ) : null}
                     </div>
                   </div>
                 </motion.div>

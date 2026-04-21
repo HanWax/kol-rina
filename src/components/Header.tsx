@@ -115,7 +115,7 @@ export function Header() {
 
       {/* Mobile nav */}
       <AnimatePresence>
-        {mobileOpen && (
+        {mobileOpen ? (
           <motion.nav
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -146,7 +146,7 @@ export function Header() {
               ))}
             </div>
           </motion.nav>
-        )}
+        ) : null}
       </AnimatePresence>
     </header>
   );

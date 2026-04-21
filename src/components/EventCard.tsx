@@ -33,14 +33,14 @@ export function EventCard({
             {event.endDate ? ` – ${event.endDate}` : ""}
           </span>
 
-          {isBookable && (
+          {isBookable ? (
             <>
               <span className="text-kr-muted/40">&middot;</span>
               <span className="font-caps text-[9px] font-bold tracking-[0.15em] uppercase text-kr-teal bg-kr-teal/[0.08] px-2.5 py-0.5 rounded-full">
                 Book Now
               </span>
             </>
-          )}
+          ) : null}
         </div>
 
         <div className="flex items-start justify-between gap-4">

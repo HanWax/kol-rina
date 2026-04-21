@@ -111,9 +111,9 @@ export function BookingForm({
             className="font-caps text-[10px] font-semibold tracking-[0.15em] uppercase text-kr-navy block mb-1.5"
           >
             {field.label}
-            {field.required && (
+            {field.required ? (
               <span className="text-kr-coral ml-1">*</span>
-            )}
+            ) : null}
           </label>
 
           {field.type === "textarea" ? (
@@ -159,9 +159,9 @@ export function BookingForm({
         </div>
       ))}
 
-      {state === "error" && (
+      {state === "error" ? (
         <p className="text-kr-coral text-[14px] font-body">{errorMessage}</p>
-      )}
+      ) : null}
 
       <button
         type="submit"

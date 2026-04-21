@@ -59,7 +59,7 @@ export function BankTransferCard({
 
       {/* Body */}
       <div className="bg-kr-white px-7 py-6 space-y-4">
-        {amount && (
+        {amount ? (
           <div className="text-center pb-4 border-b border-kr-navy/[0.08]">
             <span className="font-caps text-[10px] font-semibold tracking-[0.15em] uppercase text-kr-muted">
               Amount
@@ -68,7 +68,7 @@ export function BankTransferCard({
               {amount}
             </p>
           </div>
-        )}
+        ) : null}
 
         <div className="grid gap-3">
           <div className="flex items-center justify-between">
@@ -125,11 +125,11 @@ export function BankTransferCard({
           </div>
         </div>
 
-        {notes && (
+        {notes ? (
           <p className="text-[13px] text-kr-muted font-body leading-relaxed pt-3 border-t border-kr-navy/[0.08]">
             {notes}
           </p>
-        )}
+        ) : null}
       </div>
     </motion.div>
   );

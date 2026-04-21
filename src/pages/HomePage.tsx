@@ -155,11 +155,11 @@ export function HomePage() {
                 <p className="font-body text-kr-coral text-[15px] mt-1.5 italic">
                   {d.title}
                 </p>
-                {d.time && (
+                {d.time ? (
                   <p className="text-[12px] text-kr-muted mt-3 font-caps tracking-[0.15em] uppercase">
                     Shacharit {d.time}
                   </p>
-                )}
+                ) : null}
               </motion.div>
             ))}
           </div>

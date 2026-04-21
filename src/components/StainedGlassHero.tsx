@@ -35,7 +35,7 @@ export function StainedGlassHero({
           <div className="gold-double-rule w-24 md:w-32 mt-2" />
         </motion.div>
 
-        {children && (
+        {children ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -44,7 +44,7 @@ export function StainedGlassHero({
           >
             {children}
           </motion.div>
-        )}
+        ) : null}
       </div>
     </section>
   );

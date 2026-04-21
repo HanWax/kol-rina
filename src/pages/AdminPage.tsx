@@ -135,11 +135,11 @@ function AdminDashboard() {
         </button>
       </div>
 
-      {error && (
+      {error ? (
         <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-lg text-sm font-body">
           {error}
         </div>
-      )}
+      ) : null}
 
       {loading ? (
         <p className="text-kr-muted font-body">Loading events...</p>
@@ -161,7 +161,7 @@ function AdminDashboard() {
                   <span className="text-[13px] text-kr-muted font-body italic">
                     {ev.date}
                   </span>
-                  {ev.booking && (
+                  {ev.booking ? (
                     <>
                       <span className="text-kr-muted/40">&middot;</span>
                       <span
@@ -174,7 +174,7 @@ function AdminDashboard() {
                         {ev.booking.closed ? "Closed" : "Booking Open"}
                       </span>
                     </>
-                  )}
+                  ) : null}
                 </div>
                 <h3 className="font-heading text-lg font-semibold text-kr-navy truncate">
                   {ev.title}
@@ -184,14 +184,14 @@ function AdminDashboard() {
                 </p>
               </div>
               <div className="flex gap-2 flex-shrink-0">
-                {ev.booking && (
+                {ev.booking ? (
                   <button
                     onClick={() => setViewingBookingsFor(ev)}
                     className="px-3 py-1.5 text-kr-teal bg-kr-teal/[0.1] font-caps text-[9px] font-semibold tracking-[0.1em] uppercase rounded-lg hover:bg-kr-teal/[0.2] transition-colors cursor-pointer"
                   >
                     Bookings
                   </button>
-                )}
+                ) : null}
                 <button
                   onClick={() => setEditing(ev)}
                   className="px-3 py-1.5 text-kr-navy bg-kr-navy/[0.06] font-caps text-[9px] font-semibold tracking-[0.1em] uppercase rounded-lg hover:bg-kr-navy/[0.12] transition-colors cursor-pointer"
@@ -446,7 +446,7 @@ function EventForm({
           </span>
         </label>
 
-        {enableBooking && (
+        {enableBooking ? (
           <div className="space-y-4 pt-2">
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -485,7 +485,7 @@ function EventForm({
               </span>
             </label>
           </div>
-        )}
+        ) : null}
       </fieldset>
 
       {/* Payment */}
@@ -506,7 +506,7 @@ function EventForm({
           </span>
         </label>
 
-        {enablePayment && (
+        {enablePayment ? (
           <div className="space-y-4 pt-2">
             <div>
               <label className={labelClass}>Amount</label>
@@ -566,7 +566,7 @@ function EventForm({
               />
             </div>
           </div>
-        )}
+        ) : null}
       </fieldset>
 
       <div className="flex gap-3">
@@ -635,20 +635,20 @@ function BookingsList({
           <h2 className="font-heading text-2xl font-semibold text-kr-navy">
             Bookings — {event.title}
           </h2>
-          {!loading && (
+          {!loading ? (
             <p className="text-[13px] text-kr-muted font-body mt-1">
               {bookings.length} booking{bookings.length === 1 ? "" : "s"} · {totalAttendees} attendee{totalAttendees === 1 ? "" : "s"}
               {event.booking?.capacity ? ` · ${event.booking.capacity} capacity` : ""}
             </p>
-          )}
+          ) : null}
         </div>
       </div>
 
-      {error && (
+      {error ? (
         <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-lg text-sm font-body">
           {error}
         </div>
-      )}
+      ) : null}
 
       {loading ? (
         <p className="text-kr-muted font-body">Loading bookings...</p>
@@ -672,11 +672,11 @@ function BookingsList({
                   >
                     {b.email}
                   </a>
-                  {b.phone && (
+                  {b.phone ? (
                     <span className="text-[13px] text-kr-muted font-body ml-3">
                       {b.phone}
                     </span>
-                  )}
+                  ) : null}
                 </div>
                 <div className="text-right">
                   <div className="font-caps text-[9px] font-semibold tracking-[0.15em] uppercase text-kr-muted">
@@ -687,22 +687,23 @@ function BookingsList({
                   </div>
                 </div>
               </div>
-              {b.dietary_requirements && (
+              {b.dietary_requirements ? (
                 <p className="text-[13px] text-kr-text font-body mt-2">
                   <span className="font-semibold">Dietary:</span> {b.dietary_requirements}
                 </p>
-              )}
-              {b.notes && (
+              ) : null}
+              {b.notes ? (
                 <p className="text-[13px] text-kr-text font-body mt-1">
                   <span className="font-semibold">Notes:</span> {b.notes}
                 </p>
-              )}
-              {b.custom_fields &&
-                Object.entries(b.custom_fields).map(([k, v]) => (
-                  <p key={k} className="text-[13px] text-kr-text font-body mt-1">
-                    <span className="font-semibold">{k}:</span> {v}
-                  </p>
-                ))}
+              ) : null}
+              {b.custom_fields
+                ? Object.entries(b.custom_fields).map(([k, v]) => (
+                    <p key={k} className="text-[13px] text-kr-text font-body mt-1">
+                      <span className="font-semibold">{k}:</span> {v}
+                    </p>
+                  ))
+                : null}
             </div>
           ))}
         </div>
