@@ -126,6 +126,7 @@ export const events: KolRinaEvent[] = [
     description: [
       "Shavuot Yom Tov morning service followed by a community lunch.",
       "All are welcome to join us at HBS to celebrate Shavuot together.",
+      "We are delighted that Gila Fine will be joining us to give a shiur after lunch. Gila Fine is an internationally acclaimed Talmud scholar and author of the book 'The Madwoman in the Rabbi's Attic'.",
     ],
     schedule: [
       { time: "9:30 AM", activity: "Shavuot Shacharit & Musaf" },
@@ -148,15 +149,15 @@ export const events: KolRinaEvent[] = [
       ],
     },
     payment: {
-      amount: "£18 per person / £45 per family",
+      amount:
+        "Members: £15 adult / £8 child / £54 family\nNon-members: £18 adult / £10 child / £66 family",
       bankDetails: {
         accountName: "PLACEHOLDER_ACCOUNT_NAME",
         sortCode: "XX-XX-XX",
         accountNumber: "XXXXXXXX",
         reference: "SHAVUOT26-[SURNAME]",
       },
-      notes:
-        "Please pay within 7 days of booking to secure your place. Under-18s are free.",
+      notes: "Please pay within 7 days of booking to secure your place.",
     },
   },
   {

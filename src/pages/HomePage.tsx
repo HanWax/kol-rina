@@ -87,7 +87,7 @@ export function HomePage() {
               </p>
             </motion.div>
 
-            {/* Teal circle — Support */}
+            {/* Teal circle — Membership */}
             <motion.div
               initial={{ opacity: 0, x: 40, y: 20 }}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
@@ -95,18 +95,20 @@ export function HomePage() {
               transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="w-[220px] h-[220px] md:w-[280px] md:h-[280px] rounded-full bg-kr-teal shadow-[0_8px_50px_rgba(123,152,120,0.25)] flex flex-col items-center justify-center px-8 md:px-10 text-center md:-ml-12 md:mt-28 relative z-20"
             >
-              <span className="font-caps text-[10px] md:text-[11px] font-semibold tracking-[0.2em] uppercase text-white/70">
-                Support
+              <span className="font-caps text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-kr-navy">
+                Become a
               </span>
-              <span className="font-script text-2xl md:text-3xl text-kr-gold mt-1 drop-shadow-[0_1px_6px_rgba(179,153,98,0.3)]">
-                Kol Rina
+              <span className="font-script text-2xl md:text-3xl text-kr-navy-deep mt-1">
+                Member
               </span>
-              <Link
-                to="/get-involved"
-                className="mt-3 font-caps text-[9px] md:text-[10px] font-medium tracking-[0.2em] uppercase text-white/80 hover:text-white border-b border-white/30 hover:border-white/60 pb-0.5 transition-all duration-300"
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSdqXFWRy-84vUVLP4O7t-7kNBXUk1wsweJd5wQ8o_cNgdanVw/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 px-4 py-1.5 bg-kr-navy text-white font-caps text-[9px] md:text-[10px] font-semibold tracking-[0.2em] uppercase rounded-full hover:bg-kr-navy-deep transition-colors duration-300"
               >
-                Learn More
-              </Link>
+                Join Now
+              </a>
             </motion.div>
           </div>
         </div>

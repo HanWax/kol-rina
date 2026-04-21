@@ -64,7 +64,7 @@ export function BankTransferCard({
             <span className="font-caps text-[10px] font-semibold tracking-[0.15em] uppercase text-kr-muted">
               Amount
             </span>
-            <p className="font-heading text-lg text-kr-navy font-semibold mt-1">
+            <p className="font-heading text-lg text-kr-navy font-semibold mt-1 whitespace-pre-line leading-snug">
               {amount}
             </p>
           </div>

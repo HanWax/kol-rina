@@ -42,6 +42,40 @@ export function GetInvolvedPage() {
 
       <div className="navy-rule" />
 
+      {/* Membership */}
+      <section className="py-20 md:py-28 bg-kr-parchment relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-kr-teal/[0.04]" />
+
+        <div className="relative max-w-3xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex flex-col items-center justify-center w-[300px] h-[300px] md:w-[380px] md:h-[380px] rounded-full bg-kr-teal shadow-[0_8px_50px_rgba(123,152,120,0.3)] mx-auto"
+          >
+            <span className="font-caps text-[9px] md:text-[11px] font-bold tracking-[0.25em] uppercase text-kr-navy mb-1">
+              Become a
+            </span>
+            <span className="font-script text-3xl md:text-4xl text-kr-navy-deep">
+              Member
+            </span>
+            <div className="w-20 md:w-28 h-[1.5px] bg-kr-navy/30 my-3" />
+            <p className="text-kr-navy/80 text-[12px] md:text-[13px] px-10 md:px-14 leading-relaxed font-body mb-4">
+              Support the minyan and help shape its future by becoming a Kol Rina member.
+            </p>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdqXFWRy-84vUVLP4O7t-7kNBXUk1wsweJd5wQ8o_cNgdanVw/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-7 py-2.5 bg-kr-navy text-white font-caps text-[9px] md:text-[10px] font-semibold tracking-[0.2em] uppercase rounded-full hover:bg-kr-navy-deep transition-colors duration-300"
+            >
+              Join Now
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Roles */}
       <section className="py-20 md:py-24 bg-kr-cream relative overflow-hidden">
         <div className="absolute -top-20 -right-24 w-56 h-56 rounded-full bg-kr-teal/[0.04]" />
