@@ -106,7 +106,6 @@ export const events: KolRinaEvent[] = [
     title: "Shabbat Behar",
     date: "9 May 2026",
     time: "9:30 AM",
-    location: "HBS",
     type: "shabbat",
     summary:
       "Shabbat morning service for Parashat Behar. Followed by a communal kiddush.",
@@ -119,13 +118,12 @@ export const events: KolRinaEvent[] = [
     title: "Shavuot",
     date: "23 May 2026",
     time: "9:30 AM",
-    location: "HBS",
     type: "chag",
     summary:
       "Shavuot Yom Tov morning service followed by a community lunch.",
     description: [
       "Shavuot Yom Tov morning service followed by a community lunch.",
-      "All are welcome to join us at HBS to celebrate Shavuot together.",
+      "All are welcome to join us to celebrate Shavuot together.",
       "We are delighted that Gila Fine will be joining us to give a shiur after lunch. Gila Fine is an internationally acclaimed Talmud scholar and author of the book 'The Madwoman in the Rabbi's Attic'.",
     ],
     schedule: [
@@ -165,7 +163,6 @@ export const events: KolRinaEvent[] = [
     title: "Shabbat Chukkat-Balak",
     date: "27 June 2026",
     time: "9:30 AM",
-    location: "JVS",
     type: "shabbat",
     summary:
       "Shabbat morning service for Parashat Chukkat-Balak. Followed by a communal kiddush.",
@@ -190,7 +187,6 @@ export const events: KolRinaEvent[] = [
     title: "Shabbat Va'Etchanan",
     date: "25 July 2026",
     time: "9:30 AM",
-    location: "HBS",
     type: "shabbat",
     summary:
       "Shabbat morning service for Parashat Va'Etchanan. Followed by a communal kiddush.",
@@ -228,7 +224,6 @@ export const events: KolRinaEvent[] = [
     title: "Shabbat Chayei Sarah",
     date: "7 November 2026",
     time: "9:30 AM",
-    location: "HBS",
     type: "shabbat",
     summary:
       "Shabbat morning service for Parashat Chayei Sarah. Followed by a communal kiddush.",
@@ -241,7 +236,6 @@ export const events: KolRinaEvent[] = [
     title: "Shabbat Vayeishev",
     date: "5 December 2026",
     time: "9:30 AM",
-    location: "HBS",
     type: "shabbat",
     summary:
       "Shabbat morning service for Parashat Vayeishev. Followed by a communal kiddush.",
@@ -254,7 +248,6 @@ export const events: KolRinaEvent[] = [
     title: "Shabbat Vayera",
     date: "9 January 2027",
     time: "9:30 AM",
-    location: "HBS",
     type: "shabbat",
     summary:
       "Shabbat morning service for Parashat Vayera. Followed by a communal kiddush.",
