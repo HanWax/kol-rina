@@ -58,7 +58,7 @@ export function GetInvolvedPage() {
               Become a
             </span>
             <span className="font-script text-3xl md:text-4xl text-kr-navy-deep">
-              Member
+              Memba
             </span>
             <div className="w-20 md:w-28 h-[1.5px] bg-kr-navy/30 my-3" />
             <p className="text-kr-navy/80 text-[12px] md:text-[13px] px-10 md:px-14 leading-relaxed font-body mb-4">
