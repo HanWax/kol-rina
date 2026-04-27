@@ -140,9 +140,9 @@ export const events: KolRinaEvent[] = [
       amount:
         "Members: £15 adult / £8 child / £54 family\nNon-members: £18 adult / £10 child / £66 family",
       bankDetails: {
-        accountName: "PLACEHOLDER_ACCOUNT_NAME",
-        sortCode: "XX-XX-XX",
-        accountNumber: "XXXXXXXX",
+        accountName: "Kol Rina",
+        sortCode: "60-09-05",
+        accountNumber: "70691487",
         reference: "SHAVUOT26-[SURNAME]",
       },
       notes: "Please pay within 7 days of booking to secure your place.",
