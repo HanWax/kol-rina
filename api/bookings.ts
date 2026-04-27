@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { neon } from "@neondatabase/serverless";
 import { createClerkClient } from "@clerk/backend";
+import { verifyJwt } from "@clerk/backend/jwt";
 
 const sql = neon(process.env.DATABASE_URL!);
 const clerk = createClerkClient({
@@ -20,7 +21,9 @@ async function verifyAuth(req: VercelRequest): Promise<boolean> {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith("Bearer ")) return false;
   try {
-    await clerk.verifyJwt(authHeader.slice(7));
+    await verifyJwt(authHeader.slice(7), {
+      secretKey: process.env.CLERK_SECRET_KEY!,
+    });
     return true;
   } catch {
     return false;
