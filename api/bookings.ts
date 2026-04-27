@@ -20,7 +20,7 @@ async function verifyAuth(req: VercelRequest): Promise<boolean> {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith("Bearer ")) return false;
   try {
-    await clerk.verifyToken(authHeader.slice(7));
+    await clerk.verifyJwt(authHeader.slice(7));
     return true;
   } catch {
     return false;
