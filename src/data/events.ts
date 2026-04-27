@@ -31,7 +31,8 @@ export interface BankTransferDetails {
 export interface PaymentInfo {
   /** e.g. "£18 per person / £45 per family" */
   amount?: string;
-  bankDetails: BankTransferDetails;
+  /** Optional payment reference format, e.g. "SHAVUOT26-[SURNAME]" — uses global default if omitted */
+  reference?: string;
   /** e.g. "Please pay within 7 days of booking" */
   notes?: string;
 }
@@ -139,12 +140,7 @@ export const events: KolRinaEvent[] = [
     payment: {
       amount:
         "Members: £15 adult / £8 child / £54 family\nNon-members: £18 adult / £10 child / £66 family",
-      bankDetails: {
-        accountName: "Kol Rina",
-        sortCode: "60-09-05",
-        accountNumber: "70691487",
-        reference: "SHAVUOT26-[SURNAME]",
-      },
+      reference: "SHAVUOT26-[SURNAME]",
       notes: "Please pay within 7 days of booking to secure your place.",
     },
   },

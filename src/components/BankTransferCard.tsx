@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import type { PaymentInfo } from "../data/events";
+import { KOL_RINA_BANK_DETAILS } from "../data/payments";
 
 function CopyButton({ text, label }: { text: string; label: string }) {
   const [copied, setCopied] = useState(false);
@@ -33,7 +34,11 @@ export function BankTransferCard({
   payment: PaymentInfo;
   highlight?: boolean;
 }) {
-  const { bankDetails, amount, notes } = payment;
+  const { amount, notes, reference } = payment;
+  const bankDetails = {
+    ...KOL_RINA_BANK_DETAILS,
+    reference: reference || KOL_RINA_BANK_DETAILS.reference,
+  };
 
   return (
     <motion.div

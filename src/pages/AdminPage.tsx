@@ -8,6 +8,7 @@ import {
   useAuth,
 } from "@clerk/clerk-react";
 import type { KolRinaEvent, EventType } from "../data/events";
+import { KOL_RINA_BANK_DETAILS } from "../data/payments";
 import {
   fetchEvents,
   createEvent,
@@ -250,17 +251,8 @@ function EventForm({
   // Payment
   const [enablePayment, setEnablePayment] = useState(!!initial?.payment);
   const [amount, setAmount] = useState(initial?.payment?.amount || "");
-  const [accountName, setAccountName] = useState(
-    initial?.payment?.bankDetails?.accountName || "",
-  );
-  const [sortCode, setSortCode] = useState(
-    initial?.payment?.bankDetails?.sortCode || "",
-  );
-  const [accountNumber, setAccountNumber] = useState(
-    initial?.payment?.bankDetails?.accountNumber || "",
-  );
   const [reference, setReference] = useState(
-    initial?.payment?.bankDetails?.reference || "",
+    initial?.payment?.reference || KOL_RINA_BANK_DETAILS.reference,
   );
   const [paymentNotes, setPaymentNotes] = useState(
     initial?.payment?.notes || "",
@@ -294,12 +286,7 @@ function EventForm({
     if (enablePayment) {
       data.payment = {
         amount: amount || undefined,
-        bankDetails: {
-          accountName,
-          sortCode,
-          accountNumber,
-          reference,
-        },
+        reference: reference || undefined,
         notes: paymentNotes || undefined,
       };
     }
@@ -508,6 +495,11 @@ function EventForm({
 
         {enablePayment ? (
           <div className="space-y-4 pt-2">
+            <div className="p-3 bg-kr-navy/[0.03] rounded-lg border border-kr-navy/[0.06]">
+              <p className="text-[12px] text-kr-muted font-body">
+                <strong>Bank details:</strong> {KOL_RINA_BANK_DETAILS.accountName} • {KOL_RINA_BANK_DETAILS.sortCode} • {KOL_RINA_BANK_DETAILS.accountNumber}
+              </p>
+            </div>
             <div>
               <label className={labelClass}>Amount</label>
               <input
@@ -516,34 +508,6 @@ function EventForm({
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="e.g. £18 per person / £45 per family"
               />
-            </div>
-            <div>
-              <label className={labelClass}>Account Name</label>
-              <input
-                className={inputClass}
-                value={accountName}
-                onChange={(e) => setAccountName(e.target.value)}
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className={labelClass}>Sort Code</label>
-                <input
-                  className={inputClass}
-                  value={sortCode}
-                  onChange={(e) => setSortCode(e.target.value)}
-                  placeholder="XX-XX-XX"
-                />
-              </div>
-              <div>
-                <label className={labelClass}>Account Number</label>
-                <input
-                  className={inputClass}
-                  value={accountNumber}
-                  onChange={(e) => setAccountNumber(e.target.value)}
-                  placeholder="XXXXXXXX"
-                />
-              </div>
             </div>
             <div>
               <label className={labelClass}>Payment Reference Format</label>
