@@ -38,6 +38,8 @@ export function BookingStatus({ booking }: { booking: EventBookingConfig }) {
   const filled = booking.capacity - booking.spotsRemaining;
   const pct = Math.min((filled / booking.capacity) * 100, 100);
 
+  const showSpotCount = booking.spotsRemaining < booking.capacity;
+
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
@@ -47,9 +49,11 @@ export function BookingStatus({ booking }: { booking: EventBookingConfig }) {
             Booking Open
           </span>
         </div>
-        <span className="text-[13px] text-kr-muted font-body">
-          {booking.spotsRemaining} of {booking.capacity} spots remaining
-        </span>
+        {showSpotCount && (
+          <span className="text-[13px] text-kr-muted font-body">
+            {booking.spotsRemaining} of {booking.capacity} spots remaining
+          </span>
+        )}
       </div>
       <div className="h-1.5 bg-kr-navy/[0.08] rounded-full overflow-hidden">
         <motion.div

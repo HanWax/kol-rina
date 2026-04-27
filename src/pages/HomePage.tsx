@@ -142,33 +142,39 @@ export function HomePage() {
             {upcomingDates.map((d, i) => {
               const style = typeStyles[d.type];
               const timeLabel = d.type === "shabbat" ? `Shacharit ${d.time}` : d.time;
+              const href = d.type === "shabbat" ? "/minyan-dates" : `/events/${d.id}`;
               return (
-                <motion.div
+                <Link
                   key={d.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="group relative bg-kr-white rounded-2xl p-7 border border-kr-navy/[0.06] hover:border-kr-coral/30 transition-all duration-500 hover:shadow-[0_8px_30px_rgba(186,145,146,0.08)]"
+                  to={href}
+                  className="group"
                 >
-                  {/* Type dot accent */}
-                  <div className={`absolute top-7 right-7 w-2 h-2 rounded-full ${style.dot} opacity-60 group-hover:opacity-100 transition-opacity duration-300`} />
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.08 }}
+                    className="relative bg-kr-white rounded-2xl p-7 border border-kr-navy/[0.06] hover:border-kr-coral/30 transition-all duration-500 hover:shadow-[0_8px_30px_rgba(186,145,146,0.08)] cursor-pointer"
+                  >
+                    {/* Type dot accent */}
+                    <div className={`absolute top-7 right-7 w-2 h-2 rounded-full ${style.dot} opacity-60 group-hover:opacity-100 transition-opacity duration-300`} />
 
-                  <p className="font-caps text-[10px] font-semibold tracking-[0.2em] uppercase text-kr-muted/70 mb-1.5">
-                    {style.label}
-                  </p>
-                  <p className="font-heading text-xl md:text-2xl font-semibold text-kr-navy leading-tight">
-                    {d.date}
-                  </p>
-                  <p className="font-body text-kr-coral text-[15px] mt-1.5 italic">
-                    {d.title}
-                  </p>
-                  {d.time ? (
-                    <p className="text-[12px] text-kr-muted mt-3 font-caps tracking-[0.15em] uppercase">
-                      {timeLabel}
+                    <p className="font-caps text-[10px] font-semibold tracking-[0.2em] uppercase text-kr-muted/70 mb-1.5">
+                      {style.label}
                     </p>
-                  ) : null}
-                </motion.div>
+                    <p className="font-heading text-xl md:text-2xl font-semibold text-kr-navy leading-tight">
+                      {d.date}
+                    </p>
+                    <p className="font-body text-kr-coral text-[15px] mt-1.5 italic">
+                      {d.title}
+                    </p>
+                    {d.time ? (
+                      <p className="text-[12px] text-kr-muted mt-3 font-caps tracking-[0.15em] uppercase">
+                        {timeLabel}
+                      </p>
+                    ) : null}
+                  </motion.div>
+                </Link>
               );
             })}
           </div>
