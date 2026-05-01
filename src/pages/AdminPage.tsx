@@ -17,6 +17,7 @@ import {
   fetchBookings,
   type Booking,
 } from "../lib/api";
+import { bookingsToCSV, downloadCSV } from "../lib/csv";
 
 const clerkPubKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -581,6 +582,13 @@ function BookingsList({
     })();
   }, [event.id, getToken]);
 
+  const handleDownloadCSV = () => {
+    const csv = bookingsToCSV(bookings, event.title);
+    const sanitizedTitle = event.title.replace(/[<>:"/\\|?*\s]+/g, "_");
+    const filename = `${sanitizedTitle}_bookings_${new Date().toISOString().split("T")[0]}.csv`;
+    downloadCSV(csv, filename);
+  };
+
   const totalAttendees = bookings.reduce(
     (sum, b) => sum + b.number_of_attendees,
     0,
@@ -606,6 +614,14 @@ function BookingsList({
             </p>
           ) : null}
         </div>
+        {!loading && bookings.length > 0 ? (
+          <button
+            onClick={handleDownloadCSV}
+            className="px-4 py-2 bg-kr-teal/[0.1] text-kr-teal font-caps text-[9px] font-semibold tracking-[0.1em] uppercase rounded-lg hover:bg-kr-teal/[0.2] transition-colors cursor-pointer"
+          >
+            Download CSV
+          </button>
+        ) : null}
       </div>
 
       {error ? (
